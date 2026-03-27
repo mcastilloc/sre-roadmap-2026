@@ -1,0 +1,28 @@
+name: SRE CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Mostrar archivos
+        run: ls -la
+
+      - name: Validar Python scripts
+        run: python3 --version
+
+      - name: Validar Terraform
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          curl -LO https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_linux_amd64.zip
+          unzip terraform_1.8.5_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
+          terraform version
